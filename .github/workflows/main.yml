@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+      name: Checkout code
+    - uses: actions/setup-python@v2
+      name: Setup Python 3.9
+      with:
+        python-version: "3.9"
+    - uses: syphar/restore-virtualenv@c23446cde59e2779e6bf8f4dc27aa5c0d6b9ec97
+      name: Restore virtualenv
+      id: cache-virtualenv
+
+    - uses: syphar/restore-pip-download-cache@8755b20190cfbeb76a425368e201406b09c4b922
+      name: Restore pip download cache
+      if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+
+    - run: pip install -r requirements.txt
+      name: Install requirements
+      if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+
+    - uses: actions/cache@v2
+      name: Restore .mypy_cache
+      with:
+        path: .mypy_cache
+        key: ${{ runner.os }}-${{ hashFiles('**/*.py') }}
+        restore-keys: |
+          ${{ runner.os }}-
+
+    # Linters
+    - run: flake8 hypersound *.py
+      name: "🕵️ flake8"
+      if: ${{ always() }}
+    
+    - run: isort --check --diff --color  hypersound *.py
+      name: "🕵️ isort"
+      if: ${{ always() }}
+    
+    - run: black --check --diff --color  hypersound *.py
+      name: "🕵️ black"
+      if: ${{ always() }}
+
+    - run: mypy hypersound *.py
+      name: "🕵️ mypy"
+      if: ${{ always() }}
+
+    # Extra linters
+    - run: pylint --disable=all --enable=duplicate-code  hypersound *.py
+      name: "✨ pylint (duplicate code)"
+      if: ${{ always() }}
+      continue-on-error: true
+    
+    - run: flake8 --ignore= --select=D
+      name: "✨ flake8 (docstrings)"
+      if: ${{ always() }}
+      continue-on-error: true
+    
+    - run: flake8 --ignore= --select=CC
+      name: "✨ flake8 (complexity)"
+      if: ${{ always() }}
+      continue-on-error: true
+
+    - run: flake8 --ignore= --select=TAE
+      name: "✨ flake8 (type annotation complexity)"
+      if: ${{ always() }}
+      continue-on-error: true

@@ -1,0 +1,12 @@
+[tool.black]
+line-length = 119
+target-version = ["py39"]
+
+[tool.isort]
+profile = "black"
+skip_glob = ['.vscode/*']
+src_paths = ["hypersound"]
+known_first_party=["hypersound", "inr"]
+
+[tool.pyright]
+exclude = ['.vscode/*', 'rave/*']

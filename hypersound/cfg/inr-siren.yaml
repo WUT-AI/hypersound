@@ -1,0 +1,20 @@
+defaults:
+  - settings_schema
+
+_tags_:
+  - SIREN
+  - INR
+
+model:
+  type: SIREN
+  perceptual_loss_lambda: 0.0
+  target_network_omega_0: 2000.0
+  target_network_omega_i: 30.0
+  target_network_siren_gradient_fix: true
+
+data:
+  samples_per_epoch: 1000
+  file_limit_validation: 30
+
+pl:
+  max_epochs: 100

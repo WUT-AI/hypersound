@@ -1,0 +1,17 @@
+defaults:
+  - settings_schema
+
+_tags_:
+  - NERF
+  - INR
+
+model:
+  type: NERF
+  perceptual_loss_lambda: 0.0
+
+data:
+  samples_per_epoch: 1000
+  file_limit_validation: 30
+
+pl:
+  max_epochs: 100

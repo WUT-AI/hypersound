@@ -1,0 +1,13 @@
+defaults:
+  - settings_schema
+
+_tags_:
+  - SIREN
+
+model:
+  type: SIREN
+  target_network_omega_0: 2000.0
+  target_network_omega_i: 30.0
+  target_network_siren_gradient_fix: true
+
+learning_rate: 1e-6

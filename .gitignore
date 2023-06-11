@@ -1,0 +1,7 @@
+__pycache__
+.env
+.ipynb_checkpoints
+.virtual_documents
+.vscode/typings
+tf_siren
+runs/*

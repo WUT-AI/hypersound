@@ -1,0 +1,7 @@
+defaults:
+  - settings_schema
+
+_tags_:
+  - VCTK
+
+dataset: VCTK

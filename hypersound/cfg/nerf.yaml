@@ -1,0 +1,8 @@
+defaults:
+  - settings_schema
+
+_tags_:
+  - NERF
+
+model:
+  type: NERF
