@@ -1,4 +1,6 @@
 # HyperSound
+Source code for the paper "Hypernetworks build Implicit Neural Representations of
+Sounds". [arxiv](https://arxiv.org/abs/2302.04959)
 
 ## Setup
 
